@@ -1,0 +1,25 @@
+.main-wrapper {
+  width: 100%;
+}
+
+.todo-list-wrapper {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.todo-list-input-wrapper {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.todo-list-switch-wrapper {
+  margin-bottom: 5px;
+}
+
+.todo-wrapper {
+  padding: 10px;
+}
+
+.active-button {
+  background: black;
+}

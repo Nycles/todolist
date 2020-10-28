@@ -1,0 +1,40 @@
+.todo-item-wrapper {
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: space-between;
+
+  align-items: center;
+
+  width: 100%;
+  min-height: 50px;
+
+  border: 1px solid #b8b8b8;
+  border-radius: 8px;
+  background: #e7e7e7;
+
+  padding: 5px 10px 5px 10px;
+
+  font-family: 'Roboto';
+  font-size: 16px;
+}
+
+.todo-item-delete {
+  background: transparent;
+  border: 0;
+}
+
+.todo-item-description-wrapper {
+  max-width: 75%;
+  display: flex;
+  flex-grow: 1;
+}
+
+.todo-item-description {
+  max-width: 100%;
+  word-wrap: break-word;
+  text-decoration: none;
+}
+
+.todo-item-description.completed {
+  text-decoration: line-through;
+}
