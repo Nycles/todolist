@@ -19,7 +19,7 @@ function TodoList(props) {
             <Form
               onSubmit={onSubmit}
               render={({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} autoComplete="off">
                   <Field
                     name="description"
                     render={({ input, meta }) => (
@@ -30,7 +30,9 @@ function TodoList(props) {
                             e.preventDefault()
                           }
                         }}
+                        variant="standard"
                         label="Todo"
+                        autoFocus={true}
                         fullWidth
                         inputProps={{ 'aria-label': 'Hello world' }}
                       />
@@ -43,49 +45,89 @@ function TodoList(props) {
           <div className="todo-list-switch-wrapper">
             <Button
               style={
-                props.tasksType === 'active' ? { background: 'gray' } : null
+                props.tasksType === 'active'
+                  ? { borderRadius: 0, background: '#2e2e2e', color: '#fff' }
+                  : { borderRadius: 0 }
               }
               onClick={() => props.switchTasksType('active')}
-              variant={'contained'}
-              color={'default'}
-              size={'small'}
+              variant="contained"
+              size="small"
             >
               active
             </Button>
             <Button
               style={
-                props.tasksType === 'completed' ? { background: 'gray' } : null
+                props.tasksType === 'completed'
+                  ? { borderRadius: 0, background: '#2e2e2e', color: '#fff' }
+                  : { borderRadius: 0 }
               }
               onClick={() => props.switchTasksType('completed')}
-              variant={'contained'}
-              color={'default'}
-              size={'small'}
+              variant="contained"
+              size="small"
             >
               completed
             </Button>
             <Button
-              style={props.tasksType === 'all' ? { background: 'gray' } : null}
+              style={
+                props.tasksType === 'all'
+                  ? { borderRadius: 0, background: '#2e2e2e', color: '#fff' }
+                  : { borderRadius: 0 }
+              }
               onClick={() => props.switchTasksType('all')}
-              variant={'contained'}
-              color={'default'}
-              size={'small'}
+              variant="contained"
+              size="small"
             >
               all
             </Button>
           </div>
           <div className="todo-wrapper">
             <Grid container direction="row" spacing={3}>
-              {props.tasks.map((task) => (
-                <Grid key={task._id} item xs={12}>
-                  <Todo
-                    id={task._id}
-                    completed={task.completed}
-                    description={task.description}
-                    updateTask={props.updateTask}
-                    deleteTask={props.deleteTask}
-                  />
-                </Grid>
-              ))}
+              {props.tasks.map((task) => {
+                switch (props.tasksType) {
+                  case 'active':
+                    if (!task.completed) {
+                      return (
+                        <Grid key={task._id} item xs={12}>
+                          <Todo
+                            id={task._id}
+                            completed={task.completed}
+                            description={task.description}
+                            updateTask={props.updateTask}
+                            deleteTask={props.deleteTask}
+                          />
+                        </Grid>
+                      )
+                    } else return null
+                    break
+                  case 'completed':
+                    if (task.completed) {
+                      return (
+                        <Grid key={task._id} item xs={12}>
+                          <Todo
+                            id={task._id}
+                            completed={task.completed}
+                            description={task.description}
+                            updateTask={props.updateTask}
+                            deleteTask={props.deleteTask}
+                          />
+                        </Grid>
+                      )
+                    } else return null
+                    break
+                  default:
+                    return (
+                      <Grid key={task._id} item xs={12}>
+                        <Todo
+                          id={task._id}
+                          completed={task.completed}
+                          description={task.description}
+                          updateTask={props.updateTask}
+                          deleteTask={props.deleteTask}
+                        />
+                      </Grid>
+                    )
+                }
+              })}
             </Grid>
           </div>
         </div>
