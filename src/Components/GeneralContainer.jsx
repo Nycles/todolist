@@ -10,7 +10,6 @@ function GeneralContainer() {
   const [removed, setRemoved] = useState(false)
   const [updated, setUpdated] = useState(false)
   const [added, setAdded] = useState(false)
-  const [switched, setSwitched] = useState(false)
   const [tasksType, setTasksType] = useState('active')
 
   function register(data) {
@@ -47,9 +46,7 @@ function GeneralContainer() {
       return api.task
         .add(data)
         .then((response) => {
-          if (tasksType !== 'completed') {
-            setTasks([...tasks, response.data.data])
-          }
+          setTasks([...tasks, response.data.data])
           setAdded(false)
         })
         .catch(() => {
@@ -65,11 +62,8 @@ function GeneralContainer() {
         .updateTask(id)
         .then(() => {
           setTasks(
-            tasks.map((e) => (e._id === id ? { ...e, completed: true } : e))
+            tasks.map((e) => (e._id === id ? { ...e, completed: true } : e)),
           )
-          setTimeout(() => {
-            setTasks(tasks.filter((e) => e._id !== id))
-          }, 1000)
           setUpdated(false)
         })
         .catch(() => {
@@ -100,41 +94,46 @@ function GeneralContainer() {
   }
 
   function switchTasksType(type) {
-    if (!switched && tasksType !== type) {
-      setSwitched(true)
-      switch (type) {
-        case 'active':
-          getTasksByCompleted(false)
-            .then((response) => {
-              setTasks(response.data.data)
-              setTasksType(type)
-              setSwitched(false)
-            })
-            .catch(() => setSwitched(false))
-          break
-        case 'completed':
-          getTasksByCompleted(true)
-            .then((response) => {
-              setTasks(response.data.data)
-              setTasksType(type)
-              setSwitched(false)
-            })
-            .catch(() => setSwitched(false))
-          break
-        case 'all':
-          getAllTasks()
-            .then((response) => {
-              setTasks(response.data.data)
-              setTasksType(type)
-              setSwitched(false)
-            })
-            .catch(() => setSwitched(false))
-          break
-        default:
-          setSwitched(false)
-      }
+    if (tasksType !== type) {
+      setTasksType(type)
     }
   }
+  // function switchTasksType(type) {
+  //   if (!switched && tasksType !== type) {
+  //     setSwitched(true)
+  //     switch (type) {
+  //       case 'active':
+  //         getTasksByCompleted(false)
+  //           .then((response) => {
+  //             setTasks(response.data.data)
+  //             setTasksType(type)
+  //             setSwitched(false)
+  //           })
+  //           .catch(() => setSwitched(false))
+  //         break
+  //       case 'completed':
+  //         getTasksByCompleted(true)
+  //           .then((response) => {
+  //             setTasks(response.data.data)
+  //             setTasksType(type)
+  //             setSwitched(false)
+  //           })
+  //           .catch(() => setSwitched(false))
+  //         break
+  //       case 'all':
+  //         getAllTasks()
+  //           .then((response) => {
+  //             setTasks(response.data.data)
+  //             setTasksType(type)
+  //             setSwitched(false)
+  //           })
+  //           .catch(() => setSwitched(false))
+  //         break
+  //       default:
+  //         setSwitched(false)
+  //     }
+  //   }
+  // }
 
   useEffect(() => {
     setFinalization(true)
@@ -142,7 +141,7 @@ function GeneralContainer() {
       .me()
       .then(() => {
         setIsAuth(true)
-        getTasksByCompleted(false).then((response) => {
+        getAllTasks().then((response) => {
           setTasks(response.data.data)
           setFinalization(false)
         })

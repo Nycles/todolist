@@ -16,6 +16,16 @@
   margin-bottom: 5px;
 }
 
+.todo-list-switch-button {
+  border: 0;
+  background-color: transparent;
+  transition: all 1s linear;
+}
+
+.active-switch-button {
+  background-color: blue;
+}
+
 .todo-wrapper {
   padding: 10px;
 }
