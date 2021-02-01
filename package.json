@@ -12,12 +12,14 @@
     "axios": "^0.20.0",
     "final-form": "^4.20.1",
     "http-server": "^0.12.3",
+    "immer": "8.0.1",
     "prettier": "^2.1.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-final-form": "^6.5.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "upgrade": "^1.1.0",
     "yarn": "^1.22.10"
   },
   "scripts": {
