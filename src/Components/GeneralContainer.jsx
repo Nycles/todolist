@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import api from '../Tools/api'
+import api, { instance } from '../Tools/api'
 import General from './General'
 import Preloader from './Utilites/Preloader/Preloader'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 function GeneralContainer() {
   const [isAuth, setIsAuth] = useState(false)
@@ -12,30 +13,49 @@ function GeneralContainer() {
   const [added, setAdded] = useState(false)
   const [tasksType, setTasksType] = useState('active')
 
+  const updateInstanceToken = () => {
+    instance.defaults.headers.common['Authorization'] = localStorage.getItem(
+      'token',
+    )
+  }
+
+  const updateToken = (token = localStorage.getItem('token')) => {
+    token
+      ? localStorage.setItem('token', token)
+      : localStorage.removeItem('token')
+    updateInstanceToken()
+  }
+
   function register(data) {
     api.user.register(data).then((response) => {
-      localStorage.setItem('token', response.data.token)
+      updateToken(response.data.token)
       setIsAuth(true)
     })
   }
 
   function login(data) {
     api.user.login(data).then((response) => {
-      localStorage.setItem('token', response.data.token)
+      updateToken(response.data.token)
+      getAllTasks().then((response) => {
+        setTasks(response.data.data)
+      })
       setIsAuth(true)
     })
   }
 
   function logout() {
+    updateInstanceToken()
     return api.user.logout().then(() => {
-      localStorage.setItem('token', undefined)
+      setTasks([])
+      updateToken(null)
       setIsAuth(false)
     })
   }
 
   function deleteUser() {
+    updateInstanceToken()
     return api.user.delete().then(() => {
-      localStorage.setItem('token', undefined)
+      updateToken(null)
       setIsAuth(false)
     })
   }
@@ -89,54 +109,15 @@ function GeneralContainer() {
     return api.task.getAll()
   }
 
-  function getTasksByCompleted(completed) {
-    return api.task.getByCompleted(completed)
-  }
-
   function switchTasksType(type) {
     if (tasksType !== type) {
       setTasksType(type)
     }
   }
-  // function switchTasksType(type) {
-  //   if (!switched && tasksType !== type) {
-  //     setSwitched(true)
-  //     switch (type) {
-  //       case 'active':
-  //         getTasksByCompleted(false)
-  //           .then((response) => {
-  //             setTasks(response.data.data)
-  //             setTasksType(type)
-  //             setSwitched(false)
-  //           })
-  //           .catch(() => setSwitched(false))
-  //         break
-  //       case 'completed':
-  //         getTasksByCompleted(true)
-  //           .then((response) => {
-  //             setTasks(response.data.data)
-  //             setTasksType(type)
-  //             setSwitched(false)
-  //           })
-  //           .catch(() => setSwitched(false))
-  //         break
-  //       case 'all':
-  //         getAllTasks()
-  //           .then((response) => {
-  //             setTasks(response.data.data)
-  //             setTasksType(type)
-  //             setSwitched(false)
-  //           })
-  //           .catch(() => setSwitched(false))
-  //         break
-  //       default:
-  //         setSwitched(false)
-  //     }
-  //   }
-  // }
 
   useEffect(() => {
     setFinalization(true)
+    updateInstanceToken()
     api.user
       .me()
       .then(() => {
@@ -152,7 +133,7 @@ function GeneralContainer() {
   }, [])
 
   return (
-    <>
+    <Router>
       {finalization ? (
         <Preloader />
       ) : (
@@ -170,7 +151,7 @@ function GeneralContainer() {
           deleteTask={deleteTask}
         />
       )}
-    </>
+    </Router>
   )
 }
 

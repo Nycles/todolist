@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import api from '../../Tools/api'
 import SignUp from './SignUp'
 
 function SignUpContainer(props) {

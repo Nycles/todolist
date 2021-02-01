@@ -8,11 +8,11 @@
   width: 100%;
   min-height: 50px;
 
-  border: 1px solid #b8b8b8;
-  border-radius: 8px;
-  background: #e7e7e7;
+  border: 0;
+  border-radius: 10px;
+  background: #ffffff;
 
-  padding: 5px 10px 5px 10px;
+  padding: 5px 0px;
 
   font-family: 'Roboto';
   font-size: 16px;
@@ -24,13 +24,12 @@
 }
 
 .todo-item-description-wrapper {
-  max-width: 75%;
-  display: flex;
+  width: 80%;
   flex-grow: 1;
 }
 
 .todo-item-description {
-  max-width: 100%;
+  max-width: 80%;
   word-wrap: break-word;
   text-decoration: none;
 }

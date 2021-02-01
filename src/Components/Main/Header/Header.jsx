@@ -19,14 +19,14 @@ function MainHeader(props) {
               >
                 Logout
               </Button>
-              <Button
+              {/* <Button
                 onClick={props.deleteUser}
                 variant={'contained'}
                 color={'primary'}
                 size={'small'}
               >
                 Delete
-              </Button>
+              </Button> */}
             </div>
           ) : (
             <div className={'user-bar'}>

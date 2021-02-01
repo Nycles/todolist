@@ -3,17 +3,23 @@
 }
 
 .todo-list-wrapper {
-  width: 60%;
+  width: 600px;
   margin: 0 auto;
+}
+
+@media (max-width: 480px) {
+  .todo-list-wrapper {
+    width: 95%;
+  }
 }
 
 .todo-list-input-wrapper {
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .todo-list-switch-wrapper {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .todo-list-switch-button {

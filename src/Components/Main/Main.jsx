@@ -5,7 +5,7 @@ import TodoList from './TodoList/TodoList'
 
 function Main(props) {
   return (
-    <>
+    <div className={'main'}>
       <Header
         isAuth={props.isAuth}
         logout={props.logout}
@@ -19,7 +19,7 @@ function Main(props) {
         updateTask={props.updateTask}
         deleteTask={props.deleteTask}
       />
-    </>
+    </div>
   )
 }
 

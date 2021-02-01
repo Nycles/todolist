@@ -1,4 +1,4 @@
-import { AppBar, Button, Grid, Tab, Tabs, TextField } from '@material-ui/core'
+import { Button, Grid, TextField } from '@material-ui/core'
 import React from 'react'
 import { Field, Form } from 'react-final-form'
 import Todo from './Todo/Todo'
@@ -22,6 +22,7 @@ function TodoList(props) {
                 <form onSubmit={handleSubmit} autoComplete="off">
                   <Field
                     name="description"
+                    maxLength={5}
                     render={({ input, meta }) => (
                       <TextField
                         {...input}
@@ -98,7 +99,7 @@ function TodoList(props) {
                         </Grid>
                       )
                     } else return null
-                    break
+
                   case 'completed':
                     if (task.completed) {
                       return (
@@ -113,7 +114,7 @@ function TodoList(props) {
                         </Grid>
                       )
                     } else return null
-                    break
+
                   default:
                     return (
                       <Grid key={task._id} item xs={12}>
